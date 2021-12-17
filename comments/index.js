@@ -1,10 +1,12 @@
 const express = require("express");
 const { randomBytes } = require("crypto");
+const cors = require("cors");
 
 const app = express();
 
 //middlewares
 app.use(express.json());
+app.use(cors());
 
 const commentsByPostId = {};
 
@@ -28,7 +30,7 @@ app.get("/post/:id/comments", (req, res) => {
     commentsByPostId[req.params.id] == [] ||
     commentsByPostId[req.params.id] == undefined
   ) {
-    res.json({ status: "error", error: "no comments for the post" });
+    res.json({ status: "error", comments: [] });
   } else {
     res.json({ status: "ok", comments: commentsByPostId[req.params.id] });
   }

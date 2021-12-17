@@ -1,0 +1,16 @@
+.card {
+  /* height: 100px; */
+  /* width: 200px; */
+  background-color: aliceblue;
+  margin: 30px;
+  padding: 20px;
+}
+
+.posts-list {
+  display: flex;
+  justify-content: center;
+}
+
+.cardTitle {
+  text-align: center;
+}
