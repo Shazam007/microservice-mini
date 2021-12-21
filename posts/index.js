@@ -20,14 +20,18 @@ app.post("/posts", async (req, res) => {
   posts[id] = { id: id, title: postTitle };
 
   //send the post create event to event bus
-  await axios.post("http://localhost:4005/events", {
-    type: "PostCreated",
-    data: {
-      id: id,
-      title: postTitle,
-    },
-  });
-
+  try {
+    await axios.post("http://localhost:4005/events", {
+      type: "PostCreated",
+      data: {
+        id: id,
+        title: postTitle,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    console.log("in catch");
+  }
   res.json({ status: "ok", postID: id });
 });
 
@@ -38,7 +42,7 @@ app.get("/posts", (req, res) => {
 
 //api for event-bus
 app.post("/events", (req, res) => {
-  console.log("event recieved : ", req.body.type);
+  // console.log("event recieved : ", req.body.type);
   res.json({ status: "ok" });
 });
 

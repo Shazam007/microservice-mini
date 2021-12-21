@@ -9,10 +9,7 @@ app.use(cors());
 
 const posts = {};
 
-app.post("/events", (req, res) => {
-  console.log("event recieved: ", req.body.type);
-  const { type, data } = req.body;
-
+const handleEvents = (type, data) => {
   //query service logic
   if (type === "PostCreated") {
     const { id, title } = data;
@@ -24,12 +21,30 @@ app.post("/events", (req, res) => {
   }
 
   if (type === "CommentCreated") {
-    const { postId, comment, commentId } = data;
+    const { postId, comment, commentId, status } = data;
 
-    posts[postId].comments.push({ commentId: commentId, comment: comment });
+    posts[postId].comments.push({
+      commentId: commentId,
+      comment: comment,
+      status: status,
+    });
   }
 
-  console.log(posts);
+  if (type === "CommentUpdated") {
+    const post = posts[data.postId];
+
+    const updatedComment = post.comments.find((comment) => {
+      return comment.commentId === data.commentId;
+    });
+    // updatedComment.status = data.status;
+    updatedComment.status = data.status;
+  }
+};
+
+app.post("/events", (req, res) => {
+  const { type, data } = req.body;
+
+  handleEvents(type, data);
 
   res.json({ status: "event recieved" });
 });
@@ -39,6 +54,12 @@ app.get("/posts", (req, res) => {
   res.json({ status: "ok", posts });
 });
 
-app.listen(4002, () => {
+app.listen(4002, async () => {
   console.log("listening on 4002");
+
+  const events = await axios.get("http://localhost:4005/events");
+
+  for (let event of events.data) {
+    handleEvents(event.type, event.data);
+  }
 });
