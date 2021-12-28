@@ -15,9 +15,9 @@ app.post("/events", async (req, res) => {
   console.log(events);
   //send the event to observers
   await axios.post("http://posts-cluster-ip-serv:4000/events", event); //post service
-  // await axios.post("http://localhost:4001/events", event); //comment service
-  // await axios.post("http://localhost:4002/events", event); //combined query service
-  // await axios.post("http://localhost:4003/events", event); //comment moderation service
+  await axios.post("http://comment-cluster-ip-serv:4001/events", event); //comment service
+  await axios.post("http://query-service-cluster-ip-serv:4002/events", event); //combined query service
+  await axios.post("http://comment-mod-cluster-ip-serv:4003/events", event); //comment moderation service
 
   res.json({ status: "success" });
 });

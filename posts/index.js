@@ -42,7 +42,7 @@ app.get("/posts", (req, res) => {
 
 //api for event-bus
 app.post("/events", (req, res) => {
-  // console.log("event recieved : ", req.body.type);
+  console.log("event recieved : ", req.body.type);
   res.json({ status: "ok" });
 });
 

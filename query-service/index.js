@@ -57,7 +57,9 @@ app.get("/posts", (req, res) => {
 app.listen(4002, async () => {
   console.log("listening on 4002");
 
-  const events = await axios.get("http://localhost:4005/events");
+  const events = await axios.get(
+    "http://event-bus-cluster-ip-serv:4005/events"
+  );
   console.log(events.data);
 
   for (let event of events.data) {
