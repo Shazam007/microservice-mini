@@ -9,7 +9,7 @@ function CommentForm({ postID }) {
     //need to get the post id
     //post id ==> postID
     await axios
-      .post(`http://localhost:4001/post/${postID}/comments`, {
+      .post(`http://posts.com/post/${postID}/comments`, {
         comment: comment,
       })
       .then((res) => {

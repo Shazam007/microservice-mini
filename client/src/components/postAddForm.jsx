@@ -9,7 +9,7 @@ function PostAddForm() {
     event.preventDefault();
     //handle the submit with api
     await axios
-      .post("http://localhost:4000/posts", {
+      .post("http://posts.com/posts/create", {
         title: postName,
       })
       .then((response) => {

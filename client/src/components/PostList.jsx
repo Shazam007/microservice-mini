@@ -10,7 +10,7 @@ function PostList() {
   const [postsSet, setPostsSet] = useState({});
 
   const getPosts = async () => {
-    await axios.get("http://localhost:4002/posts").then((res) => {
+    await axios.get("http://posts.com/posts").then((res) => {
       setPostsSet(res.data.posts);
     });
   };
